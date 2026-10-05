@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent Dashboard · AI Agents UI Template</title>
+  <meta name="description" content="A responsive AI agent monitoring dashboard with live status, task queue, activity log and human-in-the-loop approvals." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">◈</span>
+        <span class="brand-name">AgentOps</span>
+      </div>
+      <nav class="nav">
+        <a class="nav-item active" href="#overview">Overview</a>
+        <a class="nav-item" href="#agents">Agents</a>
+        <a class="nav-item" href="#approvals">Approvals</a>
+        <a class="nav-item" href="#queue">Task Queue</a>
+        <a class="nav-item" href="#activity">Activity Log</a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="live-pill"><span class="pulse"></span> Live simulation</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+        <div>
+          <h1>Agent Dashboard</h1>
+          <p class="subtitle">Monitor, control and approve your AI agents in one place.</p>
+        </div>
+        <div class="topbar-actions">
+          <label class="search">
+            <span class="sr-only">Search agents</span>
+            <input type="search" id="searchInput" placeholder="Search agents…" />
+          </label>
+          <button class="btn" id="deployBtn">+ New agent</button>
+          <button class="icon-btn" id="themeBtn" aria-label="Toggle light/dark theme">◐</button>
+        </div>
+      </header>
+
+      <main id="overview">
+        <!-- KPIs -->
+        <section class="kpis" aria-label="Key metrics">
+          <article class="card kpi">
+            <span class="kpi-label">Active agents</span>
+            <strong class="kpi-value" id="kpiActive">0</strong>
+            <span class="kpi-sub" id="kpiActiveSub"></span>
+          </article>
+          <article class="card kpi">
+            <span class="kpi-label">Tasks completed</span>
+            <strong class="kpi-value" id="kpiTasks">0</strong>
+            <svg class="spark" id="sparkTasks" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+          </article>
+          <article class="card kpi">
+            <span class="kpi-label">Success rate</span>
+            <strong class="kpi-value" id="kpiSuccess">0%</strong>
+            <div class="bar"><div class="bar-fill" id="kpiSuccessBar"></div></div>
+          </article>
+          <article class="card kpi">
+            <span class="kpi-label">Avg. latency</span>
+            <strong class="kpi-value" id="kpiLatency">0s</strong>
+            <svg class="spark" id="sparkLatency" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+          </article>
+        </section>
+
+        <div class="grid">
+          <!-- Agents -->
+          <section class="card span-2" id="agents" aria-labelledby="agentsTitle">
+            <div class="card-head">
+              <h2 id="agentsTitle">Agents</h2>
+              <div class="chips" id="filterChips" role="group" aria-label="Filter by status">
+                <button class="chip active" data-filter="all">All</button>
+                <button class="chip" data-filter="running">Running</button>
+                <button class="chip" data-filter="idle">Idle</button>
+                <button class="chip" data-filter="paused">Paused</button>
+                <button class="chip" data-filter="error">Error</button>
+              </div>
+            </div>
+            <div class="agent-grid" id="agentGrid"></div>
+            <p class="empty" id="agentsEmpty" hidden>No agents match your filter.</p>
+          </section>
+
+          <!-- Approvals -->
+          <section class="card" id="approvals" aria-labelledby="approvalsTitle">
+            <div class="card-head">
+              <h2 id="approvalsTitle">Needs approval <span class="count" id="approvalCount">0</span></h2>
+            </div>
+            <ul class="approval-list" id="approvalList"></ul>
+            <p class="empty" id="approvalsEmpty" hidden>You're all caught up 🎉</p>
+          </section>
+
+          <!-- Queue -->
+          <section class="card" id="queue" aria-labelledby="queueTitle">
+            <div class="card-head">
+              <h2 id="queueTitle">Task queue</h2>
+              <button class="btn ghost small" id="addTaskBtn">+ Add task</button>
+            </div>
+            <ul class="queue-list" id="queueList"></ul>
+          </section>
+
+          <!-- Activity -->
+          <section class="card span-2" id="activity" aria-labelledby="activityTitle">
+            <div class="card-head">
+              <h2 id="activityTitle">Activity log</h2>
+              <button class="btn ghost small" id="clearLogBtn">Clear</button>
+            </div>
+            <ol class="timeline" id="logList" aria-live="polite"></ol>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
