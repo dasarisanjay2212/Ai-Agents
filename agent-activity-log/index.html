@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agent Activity Log — a modern AI agent monitoring dashboard by Sanjay Bhargav.">
+  <title>Agent Activity Log — Sanjay Bhargav</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-three"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar glass">
+      <div class="brand">
+        <div class="brand-mark"><span></span><span></span><span></span></div>
+        <div>
+          <strong>Orbit<span>Ops</span></strong>
+          <small>Agent observability</small>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <p class="nav-label">Workspace</p>
+        <button class="nav-item active" data-view="activity"><span class="nav-icon">◈</span> Activity log <b>24</b></button>
+        <button class="nav-item" data-view="agents"><span class="nav-icon">◎</span> Agents <b>8</b></button>
+        <button class="nav-item" data-view="workflows"><span class="nav-icon">⌘</span> Workflows</button>
+        <button class="nav-item" data-view="alerts"><span class="nav-icon">△</span> Alerts <b class="alert-count">3</b></button>
+
+        <p class="nav-label">Manage</p>
+        <button class="nav-item" data-view="analytics"><span class="nav-icon">◫</span> Analytics</button>
+        <button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span> Settings</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="status-card">
+          <div class="status-dot"></div>
+          <div>
+            <strong>All systems nominal</strong>
+            <small>Last checked just now</small>
+          </div>
+        </div>
+        <button class="profile-card" id="profileButton" aria-label="Open profile">
+          <div class="avatar">SB</div>
+          <div class="profile-copy">
+            <strong>Sanjay Bhargav</strong>
+            <small>Workspace owner</small>
+          </div>
+          <span>•••</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb"><span>Workspace</span><i>/</i><strong>Activity log</strong></div>
+        <div class="top-actions">
+          <button class="icon-button" id="themeGlow" title="Toggle ambient glow" aria-label="Toggle ambient glow">◐</button>
+          <button class="icon-button notification" id="notificationButton" title="Notifications" aria-label="Notifications">♢<span></span></button>
+          <button class="mini-profile" id="profileButtonTop" aria-label="Open profile"><span class="avatar small">SB</span><span>Sanjay</span><i>⌄</i></button>
+        </div>
+      </header>
+
+      <section class="page-heading">
+        <div>
+          <div class="eyebrow"><span class="pulse"></span> Live monitoring</div>
+          <h1>Agent activity <span>log</span></h1>
+          <p>Observe every execution, decision and handoff across your AI agents.</p>
+        </div>
+        <div class="heading-actions">
+          <button class="button secondary" id="exportButton">↓ Export log</button>
+          <button class="button primary" id="newAgentButton">＋ New agent</button>
+        </div>
+      </section>
+
+      
+      <section class="quick-view glass" id="quickView" hidden aria-live="polite">
+        <div class="quick-view-head">
+          <div>
+            <div class="eyebrow"><span class="pulse"></span> Workspace view</div>
+            <h2 id="quickViewTitle">View</h2>
+            <p id="quickViewText">Workspace information</p>
+          </div>
+          <button class="button secondary" id="backToActivity">← Activity log</button>
+        </div>
+        <div id="quickViewBody"></div>
+      </section>
+
+<section class="metrics-grid" aria-label="Activity metrics">
+        <article class="metric-card glass">
+          <div class="metric-top"><span>Executions today</span><span class="metric-icon cyan">↗</span></div>
+          <div class="metric-value">1,284</div>
+          <div class="metric-footer"><span class="trend positive">+18.6%</span><span>vs yesterday</span><div class="sparkline cyan-line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        </article>
+        <article class="metric-card glass">
+          <div class="metric-top"><span>Success rate</span><span class="metric-icon green">✓</span></div>
+          <div class="metric-value">98.7<span class="unit">%</span></div>
+          <div class="metric-footer"><span class="trend positive">+0.9%</span><span>this week</span><div class="sparkline green-line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        </article>
+        <article class="metric-card glass">
+          <div class="metric-top"><span>Avg. response</span><span class="metric-icon purple">ϟ</span></div>
+          <div class="metric-value">1.42<span class="unit">s</span></div>
+          <div class="metric-footer"><span class="trend positive">−12.4%</span><span>faster than avg.</span><div class="sparkline purple-line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        </article>
+        <article class="metric-card glass">
+          <div class="metric-top"><span>Active agents</span><span class="metric-icon orange">◎</span></div>
+          <div class="metric-value">8<span class="unit">/ 10</span></div>
+          <div class="metric-footer"><span class="trend neutral">2 idle</span><span>capacity</span><div class="capacity"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><i></i><i></i></div></div>
+        </article>
+      </section>
+
+      <section class="workspace-panel glass">
+        <div class="panel-header">
+          <div>
+            <h2>Recent activity</h2>
+            <p>Real-time event stream across your agent fleet.</p>
+          </div>
+          <div class="live-badge"><span></span> Live</div>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search agent, action or ID…" autocomplete="off"></label>
+          <div class="filter-group">
+            <select id="statusFilter" aria-label="Filter by status">
+              <option value="all">All statuses</option>
+              <option value="success">Success</option>
+              <option value="running">Running</option>
+              <option value="warning">Warning</option>
+              <option value="failed">Failed</option>
+            </select>
+            <select id="agentFilter" aria-label="Filter by agent">
+              <option value="all">All agents</option>
+              <option value="Atlas">Atlas</option>
+              <option value="Nova">Nova</option>
+              <option value="Pulse">Pulse</option>
+              <option value="Echo">Echo</option>
+              <option value="Scout">Scout</option>
+            </select>
+            <button class="filter-button" id="clearFilters">Clear</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Agent</th><th>Activity</th><th>Trigger</th><th>Status</th><th>Duration</th><th>Time</th><th></th></tr>
+            </thead>
+            <tbody id="activityBody"></tbody>
+          </table>
+          <div id="emptyState" class="empty-state" hidden>
+            <div class="empty-icon">⌕</div>
+            <h3>No matching activity</h3>
+            <p>Try another search term or clear the filters.</p>
+          </div>
+        </div>
+
+        <div class="table-footer">
+          <span id="resultCount">Showing 8 of 24 events</span>
+          <div class="pagination">
+            <button disabled aria-label="Previous page">‹</button><button class="current">1</button><button>2</button><button>3</button><span>…</span><button>3</button><button aria-label="Next page">›</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="chart-card glass">
+          <div class="panel-header compact">
+            <div><h2>Execution volume</h2><p>Last 7 days</p></div>
+            <select id="rangeSelect" aria-label="Chart range"><option>7 days</option><option>14 days</option><option>30 days</option></select>
+          </div>
+          <div class="chart">
+            <div class="chart-y"><span>400</span><span>300</span><span>200</span><span>100</span><span>0</span></div>
+            <div class="chart-area">
+              <div class="gridline"></div><div class="gridline"></div><div class="gridline"></div><div class="gridline"></div><div class="gridline"></div>
+              <svg viewBox="0 0 700 210" preserveAspectRatio="none" aria-label="Execution volume chart">
+                <defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b5cf6" stop-opacity=".35"/><stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient></defs>
+                <path class="area" d="M0,160 C45,155 62,115 105,130 S155,165 205,110 S250,100 300,120 S355,62 405,82 S455,112 500,75 S555,105 600,58 S655,62 700,25 L700,210 L0,210 Z"></path>
+                <path class="line" d="M0,160 C45,155 62,115 105,130 S155,165 205,110 S250,100 300,120 S355,62 405,82 S455,112 500,75 S555,105 600,58 S655,62 700,25"></path>
+                <circle cx="600" cy="58" r="5"></circle>
+              </svg>
+              <div class="chart-x"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="agents-card glass">
+          <div class="panel-header compact">
+            <div><h2>Agent health</h2><p>Current fleet status</p></div>
+            <button class="text-button" id="viewAgents">View all →</button>
+          </div>
+          <div class="agent-list">
+            <button class="agent-row" data-agent="Atlas"><span class="agent-avatar atlas">A</span><span><strong>Atlas</strong><small>Research agent</small></span><span class="health"><i></i>Healthy</span><b>99.4%</b></button>
+            <button class="agent-row" data-agent="Nova"><span class="agent-avatar nova">N</span><span><strong>Nova</strong><small>Support agent</small></span><span class="health"><i></i>Healthy</span><b>98.9%</b></button>
+            <button class="agent-row" data-agent="Pulse"><span class="agent-avatar pulse-a">P</span><span><strong>Pulse</strong><small>Analytics agent</small></span><span class="health warning"><i></i>Attention</span><b>96.2%</b></button>
+            <button class="agent-row" data-agent="Echo"><span class="agent-avatar echo">E</span><span><strong>Echo</strong><small>Content agent</small></span><span class="health"><i></i>Healthy</span><b>99.8%</b></button>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer">OrbitOps UI Template · Designed & developed by <strong>Sanjay Bhargav</strong> · <span id="clock">--:--:--</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal glass" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+      <div class="modal-kicker">ACTIVITY EVENT</div>
+      <h2 id="modalTitle">Event details</h2>
+      <div id="modalContent"></div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
