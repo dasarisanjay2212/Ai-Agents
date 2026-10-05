@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Agent Execution History - glassmorphism AI agent observability UI template">
+  <title>AgentOS — Execution History</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="orb orb-a"></div><div class="orb orb-b"></div><div class="orb orb-c"></div>
+
+  <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open navigation">☰</button>
+  <div id="mobileBackdrop" class="mobile-backdrop"></div>
+  <div class="app">
+    <aside class="sidebar glass">
+      <button class="brand nav-link" data-view="overview" aria-label="AgentOS home">
+        <span class="logo">✦</span>
+        <span><b>AGENT<span>OS</span></b><small>Execution Console</small></span>
+      </button>
+
+      <nav class="nav" aria-label="Main navigation">
+        <p>Workspace</p>
+        <button class="nav-link" data-view="overview"><span>⌂</span>Overview</button>
+        <button class="nav-link" data-view="agents"><span>✦</span>Agents <em>12</em></button>
+        <button class="nav-link active" data-view="history"><span>◷</span>Execution History</button>
+        <button class="nav-link" data-view="workflows"><span>⌁</span>Workflows</button>
+        <button class="nav-link" data-view="knowledge"><span>◈</span>Knowledge</button>
+        <p>Manage</p>
+        <button class="nav-link" data-view="settings"><span>⚙</span>Settings</button>
+        <button class="nav-link" data-view="help"><span>?</span>Help Center</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="plan glass-soft">
+          <span class="plan-icon">✦</span>
+          <b>Agent Pro</b>
+          <p>Advanced observability and longer history.</p>
+          <button id="upgradeBtn">Upgrade plan <span>→</span></button>
+        </div>
+        <button class="profile" id="profileBtn">
+          <span class="avatar">VV</span><span><b>Viveka</b><small>Admin</small></span><i>•••</i>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb"><span>Workspace</span><i>/</i><b id="crumbCurrent">Execution History</b></div>
+        <div class="top-actions">
+          <button class="icon-btn" id="focusSearch" title="Search">⌕</button>
+          <button class="icon-btn" id="notificationBtn" title="Notifications">♢<i></i></button>
+          <button class="primary" id="newRunBtn">+ New run</button>
+        </div>
+      </header>
+
+      <div id="viewRoot">
+        <section class="view" data-page="history">
+          <section class="hero">
+            <div>
+              <div class="eyebrow"><span></span> LIVE OBSERVABILITY</div>
+              <h1>Execution <strong>History</strong></h1>
+              <p>Trace every agent run, inspect decisions, and understand what happened at a glance.</p>
+            </div>
+            <button class="secondary" id="exportBtn">↓ Export CSV</button>
+          </section>
+
+          <section class="stats">
+            <article class="stat glass"><header><span>Total executions</span><b>↗</b></header><strong>18,429</strong><small class="good">↑ 18.4% <em>vs last 30 days</em></small><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+            <article class="stat glass"><header><span>Success rate</span><b>✓</b></header><strong>97.8%</strong><small class="good">↑ 2.1% <em>vs last 30 days</em></small><div class="progress"><i></i></div></article>
+            <article class="stat glass"><header><span>Avg. duration</span><b>◷</b></header><strong>42.8s</strong><small class="good">↓ 8.6% <em>faster than last month</em></small><div class="sparkline"></div></article>
+            <article class="stat glass"><header><span>Tokens used</span><b>◇</b></header><strong>2.84M</strong><small class="neutral">→ 4.2% <em>within budget</em></small><div class="tokenbar"><i></i><i></i><i></i><i></i><i></i></div></article>
+          </section>
+
+          <section class="history glass">
+            <div class="panel-head">
+              <div><h2>Recent executions</h2><p>Showing <b id="resultCount">8</b> matching runs</p></div>
+              <div class="view-switch"><button class="active" id="tableViewBtn" title="Table view">☷</button><button id="cardViewBtn" title="Card view">▦</button></div>
+            </div>
+
+            <div class="filters">
+              <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search by agent, run ID or task..." autocomplete="off"><kbd>Ctrl K</kbd></label>
+              <select id="statusFilter" aria-label="Status filter"><option value="all">All statuses</option><option value="success">Success</option><option value="running">Running</option><option value="failed">Failed</option></select>
+              <select id="agentFilter" aria-label="Agent filter"><option value="all">All agents</option><option>Atlas Researcher</option><option>Nova Support</option><option>Orion Analyst</option><option>Pulse Writer</option><option>Sage Planner</option></select>
+              <button class="filter-btn" id="dateBtn">◷ <span id="dateLabel">Last 30 days</span>⌄</button>
+              <button class="filter-btn clear-btn" id="clearFilters">Clear</button>
+            </div>
+
+            <div class="table-wrap" id="tableWrap">
+              <table>
+                <thead><tr><th>EXECUTION</th><th>AGENT</th><th>STATUS</th><th>TRIGGER</th><th>DURATION</th><th>TOKENS</th><th>STARTED</th><th></th></tr></thead>
+                <tbody id="executionBody"></tbody>
+              </table>
+            </div>
+            <div id="cardWrap" class="card-list hidden"></div>
+            <div id="emptyState" class="empty hidden"><span>⌕</span><h3>No executions found</h3><p>Try changing your search or filters.</p></div>
+
+            <div class="pagination">
+              <span id="pageText">Showing 1–8</span>
+              <div><button id="prevPage">←</button><span id="pageNumbers"></span><button id="nextPage">→</button></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view placeholder-view hidden" data-page="overview"><div class="large-icon">✦</div><h1>Workspace Overview</h1><p>Live health, execution volume, and agent performance overview.</p><div class="quick-grid"><button class="glass quick" data-view="history">◷ <b>Execution History</b><small>Inspect every run</small></button><button class="glass quick" data-view="agents">✦ <b>12 Active Agents</b><small>Manage your agents</small></button><button class="glass quick" data-view="workflows">⌁ <b>28 Workflows</b><small>Open automations</small></button></div></section>
+        <section class="view placeholder-view hidden" data-page="agents"><div class="large-icon">✦</div><h1>Agents</h1><p>Monitor your AI agents and jump directly into their latest executions.</p><div class="resource-grid" id="agentCards"></div></section>
+        <section class="view placeholder-view hidden" data-page="workflows"><div class="large-icon">⌁</div><h1>Workflows</h1><p>Explore automation workflows that create agent executions.</p><div class="resource-grid"><article class="glass resource"><b>Revenue Intelligence</b><span>Schedule • Every Monday</span><strong>Running</strong></article><article class="glass resource"><b>Support Resolution</b><span>Webhook • On ticket received</span><strong>Active</strong></article><article class="glass resource"><b>Content Pipeline</b><span>Manual • On demand</span><strong>Active</strong></article></div></section>
+        <section class="view placeholder-view hidden" data-page="knowledge"><div class="large-icon">◈</div><h1>Knowledge</h1><p>Manage the information sources available to your agents.</p><div class="resource-grid"><article class="glass resource"><b>Company Knowledge Base</b><span>2,481 documents indexed</span><strong>Synced</strong></article><article class="glass resource"><b>Product Documentation</b><span>842 documents indexed</span><strong>Synced</strong></article></div></section>
+        <section class="view placeholder-view hidden" data-page="settings"><div class="large-icon">⚙</div><h1>Settings</h1><p>Workspace preferences and observability configuration.</p><div class="settings-card glass"><label>Live execution updates <input type="checkbox" id="liveToggle" checked></label><label>Desktop notifications <input type="checkbox" id="notifyToggle" checked></label><label>Compact execution rows <input type="checkbox" id="compactToggle"></label></div></section>
+        <section class="view placeholder-view hidden" data-page="help"><div class="large-icon">?</div><h1>Help Center</h1><p>Learn how to monitor, debug, and understand AI agent executions.</p><div class="faq glass"><button>What is an execution history?</button><button>How do I filter failed runs?</button><button>How can I export execution data?</button><button>How does the execution timeline work?</button></div></section>
+      </div>
+
+      <footer>AgentOS UI Template • Agent Execution History • HTML + CSS + JavaScript</footer>
+    </main>
+  </div>
+
+  <div class="backdrop" id="backdrop"></div>
+  <aside class="drawer glass" id="drawer" aria-hidden="true">
+    <button class="close" id="closeDrawer">×</button>
+    <div id="drawerContent"></div>
+  </aside>
+
+  <div class="modal hidden" id="newRunModal">
+    <div class="modal-box glass">
+      <button class="close" id="closeModal">×</button>
+      <div class="eyebrow">NEW EXECUTION</div><h2>Start an agent run</h2><p>Choose an agent and give the run a task.</p>
+      <label>Agent<select id="runAgent"><option>Atlas Researcher</option><option>Nova Support</option><option>Orion Analyst</option><option>Pulse Writer</option><option>Sage Planner</option></select></label>
+      <label>Task<input id="runTask" value="Analyze the latest workspace activity and summarize key findings."></label>
+      <div class="modal-actions"><button class="secondary" id="cancelRun">Cancel</button><button class="primary" id="startRun">Start run</button></div>
+    </div>
+  </div>
+
+  <div class="notification-panel glass hidden" id="notificationPanel">
+    <div><b>Notifications</b><button id="closeNotifications">×</button></div>
+    <article><span class="notif-dot green"></span><p><b>Execution completed</b><small>Atlas finished competitor pricing research.</small></p><time>2m</time></article>
+    <article><span class="notif-dot yellow"></span><p><b>Run still active</b><small>Orion is analyzing weekly revenue.</small></p><time>11m</time></article>
+    <article><span class="notif-dot red"></span><p><b>Execution failed</b><small>Sage could not sync Jira.</small></p><time>38m</time></article>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
