@@ -1,0 +1,23 @@
+FINAL SUBMISSION — DO ONLY THESE THINGS
+
+1. Open README.md and replace:
+   [ADD YOUR TEAM NAME]
+   [ADD MEMBER NAME]
+   [CONTRIBUTION]
+   with your real team details.
+
+2. Upload/commit the whole agent-execution-history folder to your team's GitHub repository on your own feature branch.
+
+   Example:
+   git checkout -b viveka-agent-execution-history
+   git add agent-execution-history
+   git commit -m "Add Agent Execution History UI template"
+   git push -u origin viveka-agent-execution-history
+
+3. Create a Pull Request to the team's main branch.
+
+4. Review one teammate's Pull Request and leave a review/comment.
+
+5. After approval, merge the Pull Request.
+
+Everything else in this ZIP is already prepared, including the UI, JavaScript interactions, README documentation, and screenshots.
