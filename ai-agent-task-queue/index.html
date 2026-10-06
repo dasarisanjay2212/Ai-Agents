@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Agent Task Queue - Glassmorphism UI Template">
+  <title>AgentFlow | AI Agent Task Queue</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-orb orb-one"></div>
+  <div class="background-orb orb-two"></div>
+  <div class="background-grid"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar glass-panel">
+      <div class="brand">
+        <div class="brand-mark">✦</div>
+        <div>
+          <h1>AgentFlow</h1>
+          <span>AI Operations</span>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="queue"><span>▣</span> Task Queue</button>
+        <button class="nav-item" data-view="agents"><span>◈</span> Agents</button>
+        <button class="nav-item" data-view="activity"><span>◷</span> Activity</button>
+      </nav>
+
+      <div class="sidebar-section">
+        <div class="section-label">WORKSPACE</div>
+        <button class="nav-item" data-view="analytics"><span>◒</span> Analytics</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Settings</button>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="system-status">
+          <span class="status-dot"></span>
+          <div>
+            <strong>All systems operational</strong>
+            <small>Last checked just now</small>
+          </div>
+        </div>
+        <div class="user-card">
+          <div class="avatar">PH</div>
+          <div>
+            <strong>Chiru Hasini</strong>
+            <small>Administrator</small>
+          </div>
+          <button id="userMenuBtn" class="icon-btn" aria-label="Open user menu">⋯</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">AI OPERATIONS CENTER</p>
+          <h2 id="pageTitle">Agent Task Queue</h2>
+          <p class="subtitle" id="pageSubtitle">Monitor, prioritize, and control autonomous agent work.</p>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn glass-control" id="notificationBtn" aria-label="Notifications">♢<span class="notification-dot"></span></button>
+          <button class="primary-btn" id="newTaskBtn"><span>＋</span> New Task</button>
+        </div>
+      </header>
+
+      <section class="stats-grid" id="statsGrid">
+        <article class="stat-card glass-panel">
+          <div class="stat-icon purple">◈</div>
+          <div><span>Queued</span><strong id="queuedCount">0</strong></div>
+          <small class="trend">Waiting for execution</small>
+        </article>
+        <article class="stat-card glass-panel">
+          <div class="stat-icon blue">▶</div>
+          <div><span>Running</span><strong id="runningCount">0</strong></div>
+          <small class="trend positive">Agents active now</small>
+        </article>
+        <article class="stat-card glass-panel">
+          <div class="stat-icon green">✓</div>
+          <div><span>Completed</span><strong id="completedCount">0</strong></div>
+          <small class="trend">Successfully executed</small>
+        </article>
+        <article class="stat-card glass-panel">
+          <div class="stat-icon orange">!</div>
+          <div><span>Attention</span><strong id="attentionCount">0</strong></div>
+          <small class="trend warning">Needs review</small>
+        </article>
+      </section>
+
+      <section id="queueView" class="view">
+        <div class="toolbar glass-panel">
+          <div class="tabs" role="tablist">
+            <button class="tab active" data-filter="all">All Tasks <span id="allBadge">0</span></button>
+            <button class="tab" data-filter="queued">Queued <span id="queuedBadge">0</span></button>
+            <button class="tab" data-filter="running">Running <span id="runningBadge">0</span></button>
+            <button class="tab" data-filter="completed">Completed <span id="completedBadge">0</span></button>
+          </div>
+          <div class="toolbar-right">
+            <label class="search-box">
+              <span>⌕</span>
+              <input id="searchInput" type="search" placeholder="Search tasks..." autocomplete="off">
+            </label>
+            <select id="priorityFilter" class="select-control" aria-label="Filter by priority">
+              <option value="all">All priorities</option>
+              <option value="high">High priority</option>
+              <option value="medium">Medium priority</option>
+              <option value="low">Low priority</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="queue-layout">
+          <div class="task-list" id="taskList" aria-live="polite"></div>
+          <aside class="detail-panel glass-panel" id="detailPanel">
+            <div class="empty-detail">
+              <div class="empty-icon">✦</div>
+              <h3>Select a task</h3>
+              <p>Choose a task from the queue to inspect its execution details.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="agentsView" class="view hidden">
+        <div class="section-heading">
+          <div><p class="eyebrow">AUTONOMOUS WORKFORCE</p><h3>AI Agents</h3></div>
+          <span class="live-chip"><span class="status-dot"></span> Live</span>
+        </div>
+        <div class="agents-grid" id="agentsGrid"></div>
+      </section>
+
+      <section id="activityView" class="view hidden">
+        <div class="section-heading">
+          <div><p class="eyebrow">AUDIT TRAIL</p><h3>Activity Log</h3></div>
+          <button class="secondary-btn" id="clearActivityBtn">Clear activity</button>
+        </div>
+        <div class="activity-list glass-panel" id="activityList"></div>
+      </section>
+
+      <section id="analyticsView" class="view hidden">
+        <div class="section-heading">
+          <div><p class="eyebrow">PERFORMANCE</p><h3>Analytics Overview</h3></div>
+        </div>
+        <div class="analytics-grid">
+          <article class="analytics-card glass-panel">
+            <span>Success Rate</span><strong id="successRate">0%</strong>
+            <div class="progress"><i id="successProgress"></i></div>
+            <small>Completed tasks / total tasks</small>
+          </article>
+          <article class="analytics-card glass-panel">
+            <span>Agent Utilization</span><strong>78%</strong>
+            <div class="progress"><i style="width:78%"></i></div>
+            <small>Average active capacity</small>
+          </article>
+          <article class="analytics-card glass-panel">
+            <span>Avg. Execution</span><strong>4m 32s</strong>
+            <div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <small>Across the last 24 hours</small>
+          </article>
+        </div>
+        <div class="chart-card glass-panel">
+          <div class="chart-header"><div><span>Task throughput</span><strong>24h activity</strong></div><span class="live-chip">+18.4%</span></div>
+          <div class="fake-chart">
+            <div class="chart-line"></div>
+            <div class="chart-fill"></div>
+            <div class="chart-labels"><span>00h</span><span>04h</span><span>08h</span><span>12h</span><span>16h</span><span>20h</span><span>24h</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="settingsView" class="view hidden">
+        <div class="section-heading">
+          <div><p class="eyebrow">WORKSPACE</p><h3>Settings</h3></div>
+        </div>
+        <div class="settings-card glass-panel">
+          <label class="setting-row"><span><strong>Auto-refresh queue</strong><small>Refresh task state automatically</small></span><input class="toggle" type="checkbox" checked></label>
+          <label class="setting-row"><span><strong>Execution notifications</strong><small>Notify when agents finish a task</small></span><input class="toggle" type="checkbox" checked></label>
+          <label class="setting-row"><span><strong>Require approval for high-risk tasks</strong><small>Pause tasks marked as high priority</small></span><input class="toggle" type="checkbox"></label>
+          <label class="setting-row"><span><strong>Glass interface effects</strong><small>Enable backdrop blur and translucent cards</small></span><input class="toggle" type="checkbox" checked></label>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>AgentFlow UI Template</span>
+        <span>HTML • CSS • JavaScript</span>
+      </footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="taskModal">
+    <div class="modal glass-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header"><div><p class="eyebrow">CREATE WORK ITEM</p><h3 id="modalTitle">New Agent Task</h3></div><button class="icon-btn close-modal" id="closeModalBtn">×</button></div>
+      <form id="taskForm">
+        <label>Task name<input id="taskName" required maxlength="80" placeholder="e.g. Analyze customer feedback"></label>
+        <label>Agent
+          <select id="taskAgent">
+            <option>Research Agent</option><option>Data Analyst</option><option>Security Agent</option><option>Content Agent</option><option>Browser Agent</option>
+          </select>
+        </label>
+        <label>Priority
+          <select id="taskPriority"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select>
+        </label>
+        <label>Description<textarea id="taskDescription" rows="3" placeholder="Describe what the agent should accomplish..."></textarea></label>
+        <div class="modal-actions"><button type="button" class="secondary-btn" id="cancelModalBtn">Cancel</button><button type="submit" class="primary-btn">Create Task</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
