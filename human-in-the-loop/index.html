@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HumanLoop — Human-in-the-Loop Workflow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-orb orb-one"></div>
+  <div class="bg-orb orb-two"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">H</div>
+      <div>
+        <strong>HumanLoop</strong>
+        <span>Agent Control Center</span>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Main navigation">
+      <button class="nav-item active" data-section="overview"><span>⌂</span> Overview</button>
+      <button class="nav-item" data-section="approvals"><span>✓</span> Approvals <b class="nav-badge">4</b></button>
+      <button class="nav-item" data-section="agents"><span>✦</span> Agents</button>
+      <button class="nav-item" data-section="workflows"><span>◈</span> Workflows</button>
+      <button class="nav-item" data-section="activity"><span>◷</span> Activity</button>
+      <button class="nav-item" data-section="settings"><span>⚙</span> Settings</button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="security-card">
+        <div class="status-dot"></div>
+        <div>
+          <strong>System secure</strong>
+          <span>All agents monitored</span>
+        </div>
+      </div>
+      <div class="user-mini">
+        <div class="avatar">VV</div>
+        <div>
+          <strong>Vinaya Varshitha</strong>
+          <span>Administrator</span>
+        </div>
+        <button class="icon-btn" id="logoutBtn" title="Sign out">↪</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+      <div class="breadcrumb"><span>Workspace</span><b>/</b><strong id="pageTitle">Overview</strong></div>
+      <div class="top-actions">
+        <button class="icon-btn" id="searchBtn" title="Search">⌕</button>
+        <button class="icon-btn notification" id="notificationBtn" title="Notifications">♢<i></i></button>
+        <button class="profile" id="profileBtn">
+          <span class="avatar small">VV</span>
+          <span class="profile-name">Vinaya</span>
+          <span>⌄</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="search-panel glass" id="searchPanel">
+      <input id="globalSearch" type="search" placeholder="Search approvals, agents, workflows...">
+      <span>Press Enter</span>
+    </div>
+
+    <section class="content">
+      <div class="section-view active" id="overview">
+        <div class="hero">
+          <div>
+            <p class="eyebrow">HUMAN-IN-THE-LOOP</p>
+            <h1>Keep humans in control<br><span>of every AI decision.</span></h1>
+            <p class="hero-copy">Review, approve, pause, and audit agent actions from one calm command center.</p>
+            <div class="hero-actions">
+              <button class="primary-btn" data-go="approvals">Review approvals <span>→</span></button>
+              <button class="secondary-btn" data-go="workflows">View workflows</button>
+            </div>
+          </div>
+          <div class="hero-visual glass">
+            <div class="ring ring-outer"></div>
+            <div class="ring ring-inner"></div>
+            <div class="core">AI</div>
+            <div class="node node-top">Agent</div>
+            <div class="node node-left">Human</div>
+            <div class="node node-right">Action</div>
+            <div class="flow-line line-one"></div>
+            <div class="flow-line line-two"></div>
+            <div class="flow-line line-three"></div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card glass"><span>Pending approval</span><strong>04</strong><small class="up">● 2 urgent</small></div>
+          <div class="stat-card glass"><span>Active agents</span><strong>12</strong><small>● All healthy</small></div>
+          <div class="stat-card glass"><span>Actions reviewed</span><strong>1,284</strong><small class="up">↑ 18.4% this week</small></div>
+          <div class="stat-card glass"><span>Avg. response time</span><strong>1.8m</strong><small class="up">↓ 12% faster</small></div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel glass">
+            <div class="panel-head"><div><p class="eyebrow">REQUIRES ATTENTION</p><h2>Approval queue</h2></div><button class="text-btn" data-go="approvals">View all →</button></div>
+            <div id="overviewApprovals"></div>
+          </div>
+          <div class="panel glass">
+            <div class="panel-head"><div><p class="eyebrow">LIVE</p><h2>Agent activity</h2></div><button class="text-btn" data-go="activity">View log →</button></div>
+            <div class="activity-list">
+              <div class="activity-row"><div class="activity-icon">✦</div><div><strong>Research Agent</strong><p>Prepared market summary</p></div><time>2m</time></div>
+              <div class="activity-row"><div class="activity-icon">↗</div><div><strong>Sales Agent</strong><p>Drafted customer reply</p></div><time>7m</time></div>
+              <div class="activity-row"><div class="activity-icon">✓</div><div><strong>Support Agent</strong><p>Resolved low-risk ticket</p></div><time>13m</time></div>
+              <div class="activity-row"><div class="activity-icon">!</div><div><strong>Finance Agent</strong><p>Paused high-value transfer</p></div><time>21m</time></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-view" id="approvals">
+        <div class="page-heading"><div><p class="eyebrow">HUMAN REVIEW</p><h1>Approval queue</h1><p>Make the final call before an agent takes action.</p></div><button class="primary-btn" id="approveAllBtn">Approve all safe <span>✓</span></button></div>
+        <div class="filter-row">
+          <button class="filter active" data-filter="all">All <b>4</b></button>
+          <button class="filter" data-filter="urgent">Urgent <b>2</b></button>
+          <button class="filter" data-filter="finance">Finance <b>1</b></button>
+          <button class="filter" data-filter="customer">Customer <b>1</b></button>
+        </div>
+        <div class="approval-grid" id="approvalGrid"></div>
+      </div>
+
+      <div class="section-view" id="agents">
+        <div class="page-heading"><div><p class="eyebrow">AUTONOMOUS SYSTEMS</p><h1>Agents</h1><p>Monitor agent health, permissions, and current work.</p></div><button class="primary-btn" id="newAgentBtn">+ New agent</button></div>
+        <div class="agent-grid" id="agentGrid"></div>
+      </div>
+
+      <div class="section-view" id="workflows">
+        <div class="page-heading"><div><p class="eyebrow">ORCHESTRATION</p><h1>Workflows</h1><p>Design where AI acts independently and where humans step in.</p></div><button class="primary-btn" id="newWorkflowBtn">+ New workflow</button></div>
+        <div class="workflow-layout">
+          <div class="panel glass workflow-builder">
+            <div class="panel-head"><div><p class="eyebrow">VISUAL WORKFLOW</p><h2>Customer refund review</h2></div><span class="live-pill">● Live</span></div>
+            <div class="workflow-track">
+              <div class="flow-card"><span>01</span><b>Ticket received</b><small>Trigger</small></div>
+              <div class="connector">↓</div>
+              <div class="flow-card ai"><span>02</span><b>AI checks policy</b><small>Agent action</small></div>
+              <div class="connector">↓</div>
+              <div class="flow-card human"><span>03</span><b>Human approval</b><small>Required</small></div>
+              <div class="connector">↓</div>
+              <div class="flow-card"><span>04</span><b>Issue refund</b><small>Agent action</small></div>
+            </div>
+          </div>
+          <div class="panel glass rules-panel">
+            <div class="panel-head"><div><p class="eyebrow">GUARDRAILS</p><h2>Human checkpoints</h2></div></div>
+            <label class="switch-row">Refunds above $500 <input type="checkbox" checked><i></i></label>
+            <label class="switch-row">External messages <input type="checkbox" checked><i></i></label>
+            <label class="switch-row">Account changes <input type="checkbox" checked><i></i></label>
+            <label class="switch-row">Low-risk tasks <input type="checkbox"><i></i></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-view" id="activity">
+        <div class="page-heading"><div><p class="eyebrow">AUDIT TRAIL</p><h1>Activity</h1><p>A transparent record of agent and human decisions.</p></div><button class="secondary-btn" id="exportBtn">Export log ↓</button></div>
+        <div class="panel glass table-panel">
+          <div class="table-head"><span>EVENT</span><span>ACTOR</span><span>STATUS</span><span>TIME</span></div>
+          <div id="activityTable"></div>
+        </div>
+      </div>
+
+      <div class="section-view" id="settings">
+        <div class="page-heading"><div><p class="eyebrow">CONTROL CENTER</p><h1>Settings</h1><p>Configure your workspace and review policies.</p></div><button class="primary-btn" id="saveSettingsBtn">Save changes</button></div>
+        <div class="settings-grid">
+          <div class="panel glass settings-panel">
+            <h2>Workspace</h2>
+            <label>Workspace name<input value="HumanLoop Workspace"></label>
+            <label>Review mode<select><option>Human approval required</option><option>Human review for high risk</option><option>Autonomous</option></select></label>
+            <label>Default reviewer<input value="Vinaya Varshitha"></label>
+          </div>
+          <div class="panel glass settings-panel">
+            <h2>Notifications</h2>
+            <label class="switch-row">Approval requests <input type="checkbox" checked><i></i></label>
+            <label class="switch-row">Agent failures <input type="checkbox" checked><i></i></label>
+            <label class="switch-row">Daily activity summary <input type="checkbox"><i></i></label>
+            <label class="switch-row">Security alerts <input type="checkbox" checked><i></i></label>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"><span>✓</span><div><strong id="toastTitle">Done</strong><small id="toastText">Action completed.</small></div></div>
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal glass">
+      <button class="modal-close" id="modalClose">×</button>
+      <p class="eyebrow">HUMAN REVIEW</p>
+      <h2 id="modalTitle">Approve action?</h2>
+      <p id="modalText">Review the proposed action before approving it.</p>
+      <div class="modal-actions"><button class="secondary-btn" id="modalCancel">Cancel</button><button class="primary-btn" id="modalConfirm">Approve <span>✓</span></button></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
